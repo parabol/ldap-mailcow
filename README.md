@@ -27,8 +27,12 @@ A python script periodically checks and creates new LDAP accounts and deactivate
             - LDAP-MAILCOW_LDAP_BASE_DN=OU=Mail Users,DC=example,DC=local
             - LDAP-MAILCOW_LDAP_BIND_DN=CN=Bind DN,CN=Users,DC=example,DC=local
             - LDAP-MAILCOW_LDAP_BIND_DN_PASSWORD=BindPassword
+            - LDAP-MAILCOW_LDAP_FILTER=(&(objectClass=user)(objectCategory=person))
+            - LDAP-MAILCOW_LDAP_FIELDS_MAIL=userPrincipalName
+            - LDAP-MAILCOW_LDAP_FIELDS_NAME=cn
             - LDAP-MAILCOW_API_HOST=https://mailcow.example.local
             - LDAP-MAILCOW_API_KEY=XXXXXX-XXXXXX-XXXXXX-XXXXXX-XXXXXX
+            - LDAP-MAILCOW_API_SSL_VERIFY=1
             - LDAP-MAILCOW_SYNC_INTERVAL=300
     ```
 
@@ -38,8 +42,12 @@ A python script periodically checks and creates new LDAP accounts and deactivate
     * `LDAP-MAILCOW_LDAP_BASE_DN` - base DN where user accounts can be found
     * `LDAP-MAILCOW_LDAP_BIND_DN` - bind DN of a special LDAP account that will be used to browse for users
     * `LDAP-MAILCOW_LDAP_BIND_DN_PASSWORD` - password for bind DN account
+    * `LDAP-MAILCOW_LDAP_FILTER` - LDAP filter string to find users account
+    * `LDAP-MAILCOW_LDAP_FIELDS_MAIL` - LDAP user mail field
+    * `LDAP-MAILCOW_LDAP_FIELDS_NAME` - LDAP user full name field
     * `LDAP-MAILCOW_API_HOST` - mailcow API url. Make sure it's enabled and accessible from within the container for both reads and writes
     * `LDAP-MAILCOW_API_KEY` - mailcow API key (read/write)
+    * `LDAP-MAILCOW_API_SSL_VERIFY` - 1 - Enable, 0 - Disable SSL certificate validation when request to mailcow API
     * `LDAP-MAILCOW_SYNC_INTERVAL` - interval in seconds between LDAP synchronizations
 
 4. Start additional container: `docker-compose up -d ldap-mailcow`

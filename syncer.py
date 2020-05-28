@@ -26,6 +26,7 @@ def main():
 
     api.api_host = config['API_HOST']
     api.api_key = config['API_KEY']
+    api.is_ssl_verify = bool(int(config['API_SSL_VERIFY']))
 
     while (True):
         sync()
@@ -38,9 +39,12 @@ def sync():
     ldap_connector.set_option(ldap.OPT_REFERRALS, 0)
     ldap_connector.simple_bind_s(config['LDAP_BIND_DN'], config['LDAP_BIND_DN_PASSWORD'])
 
-    ldap_results = ldap_connector.search_s(config['LDAP_BASE_DN'], ldap.SCOPE_SUBTREE, 
-                '(&(objectClass=user)(objectCategory=person))', 
-                ['userPrincipalName', 'cn', 'userAccountControl'])
+    #ldap_results = ldap_connector.search_s(config['LDAP_BASE_DN'], ldap.SCOPE_SUBTREE,
+    #            '(&(objectClass=user)(objectCategory=person))',
+    #            ['userPrincipalName', 'cn', 'userAccountControl'])
+
+    ldap_results = ldap_connector.search_s(config['LDAP_BASE_DN'], ldap.SCOPE_SUBTREE, config['LDAP_FILTER'],
+                                           [config['LDAP_FIELDS_MAIL'], config['LDAP_FIELDS_NAME'], 'True'])
 
     ldap_results = map(lambda x: (
         x[1]['userPrincipalName'][0].decode(),
@@ -126,8 +130,12 @@ def read_config():
         'LDAP-MAILCOW_LDAP_BASE_DN',
         'LDAP-MAILCOW_LDAP_BIND_DN', 
         'LDAP-MAILCOW_LDAP_BIND_DN_PASSWORD',
+        'LDAP-MAILCOW_LDAP_FILTER',
+        'LDAP-MAILCOW_LDAP_FIELDS_MAIL',
+        'LDAP-MAILCOW_LDAP_FIELDS_NAME',
         'LDAP-MAILCOW_API_HOST', 
-        'LDAP-MAILCOW_API_KEY', 
+        'LDAP-MAILCOW_API_KEY',
+        'LDAP-MAILCOW_API_SSL_VERIFY',
         'LDAP-MAILCOW_SYNC_INTERVAL'
     ]
 
