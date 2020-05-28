@@ -47,7 +47,7 @@ def sync():
                                            [config['LDAP_FIELDS_MAIL'], config['LDAP_FIELDS_NAME'], 'True'])
 
     ldap_results = map(lambda x: (
-        x[1][config['LDAP_FIELDSFix_MAIL']][0].decode(),
+        x[1][config['LDAP_FIELDS_MAIL']][0].decode(),
         x[1][config['LDAP_FIELDS_NAME']][0].decode(),
         #False if int(x[1]['userAccountControl'][0].decode()) & 0b10 else True), ldap_results)
         True), ldap_results)
