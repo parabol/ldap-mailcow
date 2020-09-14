@@ -8,9 +8,9 @@
     <key>CNFieldName</key>
     <string>cn</string>
     <key>IDFieldName</key>
-    <string>cn</string>
+    <string>uid</string>
     <key>UIDFieldName</key>
-    <string>userPrincipalName</string>
+    <string>uid</string>
 
     <key>baseDN</key>
     <string>$ldap_base_dn</string>
@@ -21,14 +21,15 @@
     <string>$ldap_bind_dn_password</string>
     <key>bindFields</key>
     <array>
-        <string>userPrincipalName</string>
+        <string>uid</string>
+        <string>mail</string>
     </array>
 
     <key>bindAsCurrentUser</key>
     <string>YES</string>
 
     <key>hostname</key>
-    <string>ldap://$ldap_host:389</string>
+    <string>$ldap_host</string>
     <key>canAuthenticate</key>
     <string>YES</string>
 
