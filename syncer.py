@@ -56,6 +56,8 @@ def sync():
 
     for (ldap_email, ldap_name, ldap_active) in ldap_results:
         for email in ldap_email:
+            if email.split('@')[1] not in config['EMAIL_DOMAINS']:
+                continue
             (db_user_exists, db_user_active) = filedb.check_user(email)
             (api_user_exists, api_user_active, api_name) = api.check_user(email)
 
@@ -122,7 +124,7 @@ def apply_config(config_file, config_data):
     Path(os.path.dirname(config_file)).mkdir(parents=True, exist_ok=True)
 
     print(config_data, file=open(config_file, 'w'))
-    
+
     logging.info(f"Saved generated config file to {config_file}")
     return True
 
@@ -138,7 +140,8 @@ def read_config():
         'LDAP-MAILCOW_API_HOST', 
         'LDAP-MAILCOW_API_KEY',
         'LDAP-MAILCOW_API_SSL_VERIFY',
-        'LDAP-MAILCOW_SYNC_INTERVAL'
+        'LDAP-MAILCOW_SYNC_INTERVAL',
+        'LDAP-MAILCOW_EMAIL_DOMAINS'
     ]
 
     config = {}
@@ -148,7 +151,7 @@ def read_config():
             sys.exit (f"Required envrionment value {config_key} is not set")
 
         config[config_key.replace('LDAP-MAILCOW_', '')] = os.environ[config_key]
-
+    config['EMAIL_DOMAINS'] = config['EMAIL_DOMAINS'].split(',')
     return config
 
 def read_dovecot_passdb_conf_template():
