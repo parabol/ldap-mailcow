@@ -34,6 +34,7 @@ A python script periodically checks and creates new LDAP accounts and deactivate
             - LDAP-MAILCOW_API_KEY=XXXXXX-XXXXXX-XXXXXX-XXXXXX-XXXXXX
             - LDAP-MAILCOW_API_SSL_VERIFY=1
             - LDAP-MAILCOW_SYNC_INTERVAL=300
+            - LDAP-MAILCOW_EMAIL_DOMAINS=mydomain1.com,mydomain2.com
     ```
 
 3. Configure environmental variables:
@@ -49,6 +50,7 @@ A python script periodically checks and creates new LDAP accounts and deactivate
     * `LDAP-MAILCOW_API_KEY` - mailcow API key (read/write)
     * `LDAP-MAILCOW_API_SSL_VERIFY` - 1 - Enable, 0 - Disable SSL certificate validation when request to mailcow API
     * `LDAP-MAILCOW_SYNC_INTERVAL` - interval in seconds between LDAP synchronizations
+    * `LDAP-MAILCOW_EMAIL_DOMAINS` - Domain names to consider
 
 4. Start additional container: `docker-compose up -d ldap-mailcow`
 5. Check logs `docker-compose logs ldap-mailcow`
